@@ -1,69 +1,133 @@
-import java.util.Random;
-import java.util.Arrays;
-import java.util.Scanner;
-public class empwagejava{
-		static int EMP_WAGE_PER_HR=0;
-                int EMP_FULL_DAY_HR=0;
-                int EMP_PART_DAY_HR=0;
-                int NO_OF_WORK_DAY=0;
-                int MAX_MONTH_HR=100;
-		int compcount=0;
-		int totalEmpHr=0;
-                int totalWorkDay=0;
-                int isFullTime=0;
-                static int EMP_DAY_HR=0;
-                static int check = 0;
-                int totalWage=0;
-	public static void main (String[] args){
-		empwagejava empy = new empwagejava();
-		System.out.println("Welcome to Employee Wage Computaion Program.");
-		Scanner sc = new Scanner(System.in);
-		System.out.print("Enter the number of companies: ");
-		empy.compcount=sc.nextInt();
-		System.out.println();
-		for (int i = 0; i < empy.compcount; i++){
-			System.out.println("Enter the detail of Company "+(i+1));
-			System.out.println("Enter the Employee wage per hour:");
-			empwagejava.EMP_WAGE_PER_HR=sc.nextInt();
-			System.out.println("Enter the number of days per month:");
-			empy.NO_OF_WORK_DAY=sc.nextInt();
-			System.out.println("Enter the employee full day hour for a day:");
-			empy.EMP_FULL_DAY_HR=sc.nextInt();
-			System.out.println("Enter the employee half day hour for a day:");
-			empy.EMP_PART_DAY_HR=sc.nextInt();
-			while ((empy.totalEmpHr<empy.MAX_MONTH_HR)&&(empy.totalWorkDay<empy.NO_OF_WORK_DAY)) {
-				Random r = new Random();
-				empy.isFullTime=r.nextInt(2);
-				empwagejava.check=attendaceCheck();
-				empwagejava.EMP_DAY_HR=(getWorkingHr(empwagejava.check, empy.isFullTime, empy.EMP_FULL_DAY_HR, empy.EMP_PART_DAY_HR));
-				empy.totalEmpHr+=EMP_DAY_HR;
-				System.out.println("Employee wage for Day"+(empy.totalWorkDay+1)+" is ");
-				empWageBuilder();
-				empy.totalWorkDay++;
+import java.util.*;
+
+interface Iempwagejava{
+
+	public void addempwagejava(String company, int empRatePerHour, int numOfWorkingDays, int maxHoursInMonth);
+	public void empwagejava();
+	public int getTotalWage(String company);
+}
+
+class empwagejava{
+
+	public final String company;
+	public final int empRatePerHour;
+	public final int numOfWorkingDays;
+	public final int maxHoursPerMonth;
+	public int totalEmpWage;
+
+	public empwagejava(String company, int empRatePerHour, int numOfWorkingDays, int maxHoursPerMonth){
+
+		this.company = company;
+		this.empRatePerHour = empRatePerHour;
+		this.numOfWorkingDays = numOfWorkingDays;
+		this.maxHoursPerMonth = maxHoursPerMonth;
+		totalEmpWage = 0;
+	}
+
+	public void setTotalEmpWage(int totalEmpWage){
+
+		this.totalEmpWage = totalEmpWage;
+	}
+
+	@Override
+	public String toString(){
+
+		return "Total Emp Wage For Company : "+company + " is : "+totalEmpWage;
+	}
+}
+
+
+public class Day23EmpWageComputation implements Iempwagejava {
+
+	public static final int isPartTime = 1;
+	public static final int isFullTime = 2;
+
+
+	private int numOfCompany = 0;
+
+	private LinkedList<empwagejava> empwagejavaList;
+	private Map<String,empwagejava> companyToEmpWageMap;
+
+	public Day23EmpWageComputation(){
+
+		empwagejavaList= new LinkedList<>();
+		companyToEmpWageMap = new HashMap<>();
+	}
+
+	public void addempwagejava(String company, int empRatePerHour, int numOfWorkingDays, int maxHoursPerMonth){
+
+		empwagejava empwagejava = new empwagejava(company, empRatePerHour, numOfWorkingDays, maxHoursPerMonth);
+		empwagejavaList.add(empwagejava);
+		companyToEmpWageMap.put(company, empwagejava);
+	}
+
+	public void empwagejava(){
+
+		for (int i= 0; i < empwagejavaList.size(); i++){
+
+			empwagejava empwagejava = empwagejavaList.get(i);
+			empwagejava.setTotalEmpWage(this.empwagejava(empwagejava));
+			System.out.println(empwagejava);
+
+		}
+	}
+	@Override
+	public int getTotalWage(String company){
+
+		return companyToEmpWageMap.get(company).totalEmpWage;
+
+	}
+
+	public int empwagejava(empwagejava empwagejava){
+		int totalEmpHrs = 0, totalEmpWage = 0, totalWorkingDays = 0;
+		while ( totalEmpHrs <= empwagejava.maxHoursPerMonth && totalWorkingDays < empwagejava.numOfWorkingDays )
+		{
+			totalWorkingDays++;
+			int empHrs = 0, empWage = 0;
+			int empCheck =(int) Math.floor(Math.random() * 10) % 3;
+			switch (empCheck)
+			{
+				case isFullTime:
+					empHrs = 8;
+					break;
+				case isPartTime:
+					empHrs = 4;
+					break;
+				default:
+					empHrs = 0;
 			}
-			empy.totalWage=(empy.totalEmpHr*empwagejava.EMP_WAGE_PER_HR);
-			System.out.println("Total Working Hour for this month of Company "+(i+1)+" is:"+empy.totalEmpHr);
-			System.out.println("Total wage of the employee for this month of company "+(i+1)+" is:"+empy.totalWage);
-			System.out.println();
+			totalEmpHrs += empHrs;
+			empWage = empHrs * empwagejava.empRatePerHour;
+			totalEmpWage += empWage;
+			// Initializing a Dictionary
+        Dictionary geek = new Hashtable();
+	String result="";
+result=empWage+":"+totalEmpWage;
+
+        // put() method
+        geek.put(totalWorkingDays, result);
+
+        // elements() method :
+        for (Enumeration i = geek.elements(); i.hasMoreElements();)
+        {
+            System.out.println("Value in Dictionary : " + i.nextElement());
+        }
+			System.out.println("Employee Wage : "+empwagejava.company+" "+empWage);
 		}
+		System.out.println("Total Employee Wage: " + totalEmpWage);
+		return totalEmpHrs*empwagejava.empRatePerHour;
+
 	}
-	public static int attendaceCheck() {
-		Random rand = new Random();
-		return rand.nextInt(2);
+
+	public static void main(String [] args){
+
+		Iempwagejava empWageBuilder = new Day23EmpWageComputation();
+		empWageBuilder.addempwagejava("Dmart",20,2,10);
+		empWageBuilder.addempwagejava("Reliance",10,4,20);
+		empWageBuilder.empwagejava();
+
+
+		System.out.println("Total wage for dmart Company : "+empWageBuilder.getTotalWage("Dmart"));
 	}
-	public static void empWageBuilder() {
-		 System.out.println(empwagejava.check*empwagejava.EMP_DAY_HR*empwagejava.EMP_WAGE_PER_HR);
-	}
-	public static int getWorkingHr(int att, int ishr, int fd, int hd) {
-		int empHr=0;
-		switch(ishr) {
-		case 0:
-			empHr=(att*hd);
-			break;
-		case 1:
-			empHr=(att*fd);
-			break;
-		}
-		return empHr;
-	}
+
 }
