@@ -5,7 +5,7 @@ public class empwagejava{
 		int EMP_WAGE_PER_HR=20;
 		int EMP_FULL_DAY_HR=8;
 		int EMP_PART_DAY_HR=4;
-		int NO_OF_WORK_DAY=7;
+		int NO_OF_WORK_DAY=20;
 		int totalEmpHr=0;
 		int totalWorkDay=0;
 		int isFullTime=0;
@@ -24,7 +24,7 @@ public class empwagejava{
 			totalWorkDay++;
 		}
 		totalWage=(totalEmpHr*EMP_WAGE_PER_HR);
-		System.out.println("Total wage of the employee is:"+totalWage);
+		System.out.println("Total wage of the employee for this month is:"+totalWage);
 	}
 	public static int attendaceCheck() {
 		Random rand = new Random();
