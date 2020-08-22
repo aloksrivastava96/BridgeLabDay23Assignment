@@ -6,6 +6,7 @@ public class empwagejava{
 		int EMP_FULL_DAY_HR=8;
 		int EMP_PART_DAY_HR=4;
 		int NO_OF_WORK_DAY=20;
+		int MAX_MONTH_HR=100;
 		int totalEmpHr=0;
 		int totalWorkDay=0;
 		int isFullTime=0;
@@ -13,7 +14,7 @@ public class empwagejava{
 		System.out.println("Welcome to Employee Wage Computaion Program.");
 		int check = 0;
 		int totalWage=0;
-		while (totalWorkDay<NO_OF_WORK_DAY) {
+		while ((totalEmpHr<MAX_MONTH_HR)&&(totalWorkDay<NO_OF_WORK_DAY)) {
 			Random r = new Random();
 			isFullTime=r.nextInt(2);
 			check=attendaceCheck();
@@ -24,6 +25,7 @@ public class empwagejava{
 			totalWorkDay++;
 		}
 		totalWage=(totalEmpHr*EMP_WAGE_PER_HR);
+		System.out.println("Total Working Hour for this month is:"+totalEmpHr);
 		System.out.println("Total wage of the employee for this month is:"+totalWage);
 	}
 	public static int attendaceCheck() {
